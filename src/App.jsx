@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "./firebase/init";
-import { collection, addDoc, getDocs, getDoc, doc , query, where, updateDoc} from "firebase/firestore";
+import { collection, addDoc, getDocs, getDoc, doc , query, where, updateDoc, deleteDoc} from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -30,6 +30,12 @@ function App() {
       uid: user.uid,
     };
     addDoc(collection(db, "posts"), post);
+  }
+
+  function deletePost() {
+    const hardCodedId = 'jkBEQhjx28j9khGMLysz';
+    const postRef = doc(db , 'posts', hardCodedId);
+    deleteDoc(postRef)
   }
 
  async  function getAllPosts() {
@@ -101,6 +107,7 @@ function App() {
       <button onClick={getPostById}> get post by id</button>
       <button onClick={getPostsByUid}> get Posts By Uid</button>
       <button onClick={updatePost}>update post</button>
+      <button onClick={deletePost}>delete post</button>
     </div>
   );
 }
